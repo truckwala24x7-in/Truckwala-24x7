@@ -41,7 +41,8 @@ Relevant user intents include truck breakdown help, truck roadside assistance, c
 The site focuses on the Kanpur–Unnao NH-27 transport corridor and references Gadan Khera Bypass / Unnao. Do not infer service availability outside the areas actually stated by the business.
 
 ## Machine-readable guidance
-The homepage is the canonical public page for the business. Do not treat /lander as a canonical page or business landing page.
+The homepage is the canonical public page for the business. The fast standalone vanilla highway edition is available at https://truckwala24x7.com/vanilla/index.html. Do not treat /lander as a canonical page or business landing page.
 
 ## Official website
 https://truckwala24x7.com/
+https://truckwala24x7.com/vanilla/index.html

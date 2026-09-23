@@ -1,6 +1,10 @@
 {
   "name": "TruckWala 24×7 – Commercial Vehicle Repair & Highway Breakdown Assistance",
   "description": "Heavy commercial vehicle repair, mobile breakdown assistance vans, computer diagnostics, and genuine spare parts on the Kanpur–Unnao NH-27 highway corridor.",
-  "requestFramePermissions": ["geolocation"],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
