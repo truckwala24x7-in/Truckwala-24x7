@@ -1,4 +1,6 @@
+# TruckWala 24×7 crawler policy
 User-agent: *
 Allow: /
 
+# Keep public search and AI discovery resources crawlable.
 Sitemap: https://truckwala24x7.com/sitemap.xml
