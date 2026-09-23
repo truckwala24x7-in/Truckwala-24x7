@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Phone, MessageSquare, Navigation, ShieldCheck, Clock, Wrench } from 'lucide-react';
 import { BUSINESS_CONFIG, buildWhatsAppLink } from '../data/content';
+const TruckScene = lazy(() => import('./TruckScene')); 
 
 interface HeroProps {
   onOpenSOS: () => void;
@@ -29,10 +30,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenSOS, onTrackAction }) => {
 
   return (
     <section className="relative bg-[#080c13] border-b border-slate-800 overflow-hidden">
+      <Suspense fallback={null}><TruckScene /></Suspense>
+      <Suspense fallback={null}><TruckScene /></Suspense>
       {/* Background Hero Imagery with Industrial Contrast Scrim */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/src/assets/images/hero_breakdown_truck_1790186272391.jpg"
+          src="/assets/images/hero_breakdown_truck_1790186272391.jpg"
           alt="TruckWala 24x7 commercial truck emergency roadside assistance on highway corridor"
           className="w-full h-full object-cover object-center opacity-30 sm:opacity-40"
           referrerPolicy="no-referrer"
