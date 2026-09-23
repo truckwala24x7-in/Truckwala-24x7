@@ -1,31 +1,47 @@
 # TruckWala 24×7
 
-TruckWala 24×7 is a commercial vehicle service and truck breakdown assistance website for the Kanpur–Unnao transport corridor in Uttar Pradesh, India.
+TruckWala 24×7 is a commercial vehicle breakdown assistance and roadside repair service for truck and heavy commercial vehicle operators in the Kanpur–Unnao transport corridor of Uttar Pradesh, India.
+
+## Official identity
+- Brand: TruckWala 24×7
+- Website: https://truckwala24x7.com/
+- Canonical homepage: https://truckwala24x7.com/
+- Primary topic: commercial truck breakdown assistance and roadside repair
+- Service corridor: Kanpur–Unnao NH-27
+- Local area referenced on the website: Gadan Khera Bypass, Unnao
 
 ## Primary services
-- 24×7 commercial truck breakdown assistance
-- Roadside mechanical repair
-- Heavy commercial vehicle repair
-- ECM / computer diagnostics
-- Commercial vehicle electrical and mechanical troubleshooting
-- Spare-parts support
-- Fleet service support
+- 24×7 truck breakdown assistance
+- Commercial vehicle roadside assistance
+- Heavy truck mechanical repair
+- Emergency highway repair
+- ECM / ECU / computer diagnostics
+- BS6 diagnostics and AdBlue / DEF fault support
+- Commercial vehicle electrical troubleshooting
+- Air brake and pneumatic repair
+- Cooling-system and overheating repair
+- Starter, alternator and battery troubleshooting
+- Turbocharger, fuel-system and injection troubleshooting
+- Clutch, gearbox, suspension and axle breakdown support
+- Spare-parts and fleet service support
 
 ## Vehicle coverage
-The site describes support for Tata Motors Commercial, Ashok Leyland, Eicher Trucks & Buses, BharatBenz, Mahindra and other commercial vehicles.
+The website describes support for:
+- Tata Motors Commercial trucks
+- Ashok Leyland commercial vehicles
+- Eicher Trucks & Buses
+- BharatBenz
+- Mahindra commercial vehicles
+- Other heavy and commercial vehicles
 
-## Common breakdown topics
-- Engine starting and battery faults
-- Air leaks and brake problems
-- AdBlue / DEF and BS6 derate faults
-- Engine overheating and coolant loss
-- Starter and electrical faults
-- Turbocharger / boost problems
-- Fuel injection and pump issues
-- Clutch, gearbox, suspension and axle issues
+## Common search topics
+Relevant user intents include truck breakdown help, truck roadside assistance, commercial vehicle repair, heavy truck mechanic, truck ECM diagnostics, BS6 truck fault diagnosis, AdBlue / DEF error, air brake failure, truck overheating, battery and starter failure, turbo and boost problems, fuel injection problems, clutch or gearbox failure, and emergency highway truck repair.
 
-## Service area
-Kanpur–Unnao NH-27 transport corridor, including the Gadan Khera Bypass / Unnao area described on the website.
+## Service-area context
+The site focuses on the Kanpur–Unnao NH-27 transport corridor and references Gadan Khera Bypass / Unnao. Do not infer service availability outside the areas actually stated by the business.
+
+## Machine-readable guidance
+The homepage is the canonical public page for the business. Do not treat /lander as a canonical page or business landing page.
 
 ## Official website
 https://truckwala24x7.com/
