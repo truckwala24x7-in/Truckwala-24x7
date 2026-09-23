@@ -6,14 +6,15 @@ export const BUSINESS_CONFIG = {
   subTagline: 'Commercial Vehicle Service & Breakdown Assistance',
   servicePromise: 'Complete Commercial Vehicle Solution Under One Roof.',
   operatingRule: 'No Breakdown Left Unanswered.',
-  phoneDisplay: '+91 94500 02407',
-  phoneCall: '+919450002407',
-  whatsappNumber: '919450002407',
-  email: 'truckwala24x7@gmail.com',
-  address: 'Gadan Khera Bypass, Unnao, Uttar Pradesh 209801',
-  corridor: 'Kanpur–Unnao Transport Corridor (NH-27)',
-  googleMapsUrl: 'https://maps.google.com/?q=Gadan+Khera+Bypass+Unnao+Uttar+Pradesh',
-  googleReviewsUrl: 'https://maps.google.com/?q=TruckWala+24x7+Gadan+Khera+Bypass+Unnao',
+  // Replace these unpublished values only after the owner verifies them.
+  phoneDisplay: 'Contact number updating soon',
+  phoneCall: '',
+  whatsappNumber: '',
+  email: '',
+  address: 'Service location details updating soon',
+  corridor: 'Kanpur–Unnao Transport Corridor',
+  googleMapsUrl: '',
+  googleReviewsUrl: '',
   hours: '24 Hours · 7 Days · 365 Days',
 };
 

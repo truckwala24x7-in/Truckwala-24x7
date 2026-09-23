@@ -22,7 +22,7 @@ export default function App() {
     {
       id: 'init-1',
       type: 'LOCATION_SHARED',
-      label: 'Hub Registered: Gadan Khera Bypass, Unnao',
+      label: 'Service hub details awaiting owner verification',
       timestamp: new Date().toLocaleTimeString(),
     },
   ]);

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://truckwala24x7.in/sitemap.xml

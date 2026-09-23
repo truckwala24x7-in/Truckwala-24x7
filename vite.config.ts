@@ -5,6 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    base: process.env.GITHUB_ACTIONS ? '/Truckwala-24x7/' : '/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

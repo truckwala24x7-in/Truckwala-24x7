@@ -22,7 +22,7 @@ export const FleetAndServiceForm: React.FC<FleetAndServiceFormProps> = ({
   const [details, setDetails] = useState('');
   const [status, setStatus] = useState<'IDLE' | 'SENDING' | 'SUCCESS' | 'ERROR'>('IDLE');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !phone.trim()) {
       setStatus('ERROR');
@@ -30,17 +30,18 @@ export const FleetAndServiceForm: React.FC<FleetAndServiceFormProps> = ({
     }
 
     setStatus('SENDING');
-    setTimeout(() => {
-      setStatus('SUCCESS');
-      onTrackAction('FORM_SUBMITTED', activeTab === 'fleet' ? 'Fleet Operator Inquiry' : 'Service Request Form', {
-        name,
-        phone,
-        vehicleNo,
-        serviceType,
-        location,
-        fleetSize: activeTab === 'fleet' ? fleetSize : undefined,
+    try {
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, vehicleNo, serviceType, location, fleetSize, details, inquiryType: activeTab }),
       });
-    }, 600);
+      if (!response.ok) throw new Error('Submission failed');
+      setStatus('SUCCESS');
+      onTrackAction('FORM_SUBMITTED', activeTab === 'fleet' ? 'Fleet Operator Inquiry' : 'Service Request Form', { name, phone, vehicleNo, serviceType, location, fleetSize: activeTab === 'fleet' ? fleetSize : undefined });
+    } catch {
+      setStatus('ERROR');
+    }
   };
 
   const handleReset = () => {
@@ -290,7 +291,7 @@ export const FleetAndServiceForm: React.FC<FleetAndServiceFormProps> = ({
 
                 {status === 'ERROR' && (
                   <div className="p-3 bg-red-950/60 border border-red-800 text-xs text-red-300 rounded-sm">
-                    Please provide your name and contact phone number.
+                    Please provide your name and phone number, or try again in a moment. The form needs the Vercel service endpoint in production.
                   </div>
                 )}
 
