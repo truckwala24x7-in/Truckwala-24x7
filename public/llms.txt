@@ -1,0 +1,31 @@
+# TruckWala 24×7
+
+TruckWala 24×7 is a commercial vehicle service and truck breakdown assistance website for the Kanpur–Unnao transport corridor in Uttar Pradesh, India.
+
+## Primary services
+- 24×7 commercial truck breakdown assistance
+- Roadside mechanical repair
+- Heavy commercial vehicle repair
+- ECM / computer diagnostics
+- Commercial vehicle electrical and mechanical troubleshooting
+- Spare-parts support
+- Fleet service support
+
+## Vehicle coverage
+The site describes support for Tata Motors Commercial, Ashok Leyland, Eicher Trucks & Buses, BharatBenz, Mahindra and other commercial vehicles.
+
+## Common breakdown topics
+- Engine starting and battery faults
+- Air leaks and brake problems
+- AdBlue / DEF and BS6 derate faults
+- Engine overheating and coolant loss
+- Starter and electrical faults
+- Turbocharger / boost problems
+- Fuel injection and pump issues
+- Clutch, gearbox, suspension and axle issues
+
+## Service area
+Kanpur–Unnao NH-27 transport corridor, including the Gadan Khera Bypass / Unnao area described on the website.
+
+## Official website
+https://truckwala24x7.com/
