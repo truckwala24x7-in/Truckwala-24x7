@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { Phone, MessageSquare, Navigation, ShieldCheck, Clock, Wrench } from 'lucide-react';
 import { BUSINESS_CONFIG, buildWhatsAppLink } from '../data/content';
 const TruckScene = lazy(() => import('./TruckScene')); 
@@ -9,6 +9,16 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenSOS, onTrackAction }) => {
+  const [showTruckScene, setShowTruckScene] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 1024px)');
+    const update = () => setShowTruckScene(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+
   const handleCall = () => {
     onTrackAction('CALL_CLICK', 'Hero Primary Call 24x7');
     window.location.href = `tel:${BUSINESS_CONFIG.phoneCall}`;
@@ -30,8 +40,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenSOS, onTrackAction }) => {
 
   return (
     <section className="relative bg-[#080c13] border-b border-slate-800 overflow-hidden">
-      <Suspense fallback={null}><TruckScene /></Suspense>
-      <Suspense fallback={null}><TruckScene /></Suspense>
+      {showTruckScene && <Suspense fallback={null}><TruckScene /></Suspense>}
       {/* Background Hero Imagery with Industrial Contrast Scrim */}
       <div className="absolute inset-0 z-0">
         <img
