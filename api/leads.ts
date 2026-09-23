@@ -97,8 +97,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
          ${lead.location}, ${lead.fleetSize}, ${lead.details}, ${lead.inquiryType})
     `;
 
-    // Email is optional: database persistence remains independent of notification delivery.
-    await notifyOwner(lead);
+    // Email is optional: a notification outage must not make a saved lead look failed.
+    try {
+      await notifyOwner(lead);
+    } catch (notificationError) {
+      console.error('Lead notification delivery failed', notificationError);
+    }
     return res.status(201).json({ ok: true });
   } catch (error) {
     console.error('Lead submission failed', error);
