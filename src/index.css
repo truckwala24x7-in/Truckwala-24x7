@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-truck-blue: #1e88e5;
+    --color-wala-red: #d32f2f;
+    --color-brand-green: #43a047;
+  }
+  
+  html {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: 'Barlow Condensed', 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Custom scrollbar and industrial finish */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0f17;
+}
+::-webkit-scrollbar-thumb {
+  background: #283347;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1e88e5;
+}
+
