@@ -18,20 +18,31 @@ import {
   CheckCircle2,
   Navigation,
   Sparkles,
-  Info
+  Info,
+  Calculator,
+  FileText,
+  Truck,
+  Gamepad2,
+  Eye
 } from 'lucide-react';
 import { EmergencyBreakdownModal } from './components/EmergencyBreakdownModal';
+import { FreightQuoteEstimator } from './components/FreightQuoteEstimator';
+import { MyTicketsModal } from './components/MyTicketsModal';
+import { FleetAndServiceForm } from './components/FleetAndServiceForm';
 import { DiagnosticsGuide } from './components/DiagnosticsGuide';
 import { LocationMap } from './components/LocationMap';
 import { ReviewsSection } from './components/ReviewsSection';
+import { LogisticsStrategyDashboard } from './components/LogisticsStrategyDashboard';
+import { VehicleCoverage } from './components/VehicleCoverage';
+import { SeoKnowledgeFaqSection } from './components/SeoKnowledgeFaqSection';
 import { TrackingEventType } from './types';
 
 /* ============================================================
-   TRUCKWALA 24×7 — 3D INTERACTIVE WEBSITE
-   Built with React Three Fiber + Drei + Framer Motion
+   TRUCKWALA 24×7 — UNIFIED COMMERCIAL HIGHWAY PLATFORM
+   Roadside Assistance + 3D Diagnostic Visualizer + Strategy Game Logistics
+   Brand Colors: TRUCK Blue (#2563EB) | WALA Red (#F04438) | 24×7 Green (#16A34A)
    ============================================================ */
 
-// ============ CONFIGURATION ============
 export const CONFIG = {
   business: {
     name: "TruckWala 24×7",
@@ -40,23 +51,22 @@ export const CONFIG = {
     phoneDisplay: "+91 94500 02407",
     whatsapp: "919450002407",
     email: "help@truckwala24x7.com",
-    address: "Gadan Khera Bypass, Unnao, Uttar Pradesh, India",
+    address: "Gadan Khera Bypass, Unnao & Panki Industrial Hub, Kanpur, UP, India",
     coordinates: { lat: 26.4499, lng: 80.3319 },
-    googleMapsUrl: "https://maps.google.com/?q=26.4499,80.3319",
-    googleReviewUrl: "https://maps.google.com/?q=26.4499,80.3319",
+    googleMapsUrl: "https://maps.app.goo.gl/P7uBDaVwf3XMfVYdA",
+    googleReviewUrl: "https://maps.app.goo.gl/P7uBDaVwf3XMfVYdA",
     corridor: "Kanpur–Unnao NH-27 Corridor",
   },
   colors: {
-    bg: '#0A0B10',
-    panel: 'rgba(18, 20, 28, 0.72)',
-    orange: '#FF5A1F',
-    blue: '#3B8BFF',
-    green: '#00D97E',
+    bg: '#0A0D14',
+    panel: 'rgba(16, 20, 32, 0.75)',
+    blue: '#2563EB',        // TRUCK Blue
+    orange: '#F04438',      // WALA Red/Orange
+    green: '#16A34A',       // 24×7 Green
     electric: '#2DD4FF',
   }
 };
 
-// ============ SERVICES DATA ============
 export const SERVICES = [
   {
     id: 'engine',
@@ -64,8 +74,8 @@ export const SERVICES = [
     desc: "Computerised diagnostics and engine health checks.",
     details: "BS-VI SCR / AdBlue derate clearing, ECM scan, injector calibration, and high-temp overheating fixes.",
     icon: "⚙️",
-    color: '#FF5A1F',
-    turnaround: "15–30 Min Dispatch"
+    color: '#F04438',
+    turnaround: "15–30 Min Target"
   },
   {
     id: 'cabin',
@@ -73,8 +83,8 @@ export const SERVICES = [
     desc: "Alternator, starter, wiring and cabin repairs.",
     details: "24V starter motors, alternator charging relays, fuse board short circuits, and digital dashboard meters.",
     icon: "⚡",
-    color: '#2DD4FF',
-    turnaround: "20–35 Min Dispatch"
+    color: '#2563EB',
+    turnaround: "20–35 Min Target"
   },
   {
     id: 'brakes',
@@ -82,8 +92,8 @@ export const SERVICES = [
     desc: "Brake pads, drums, hydraulics and ABS service.",
     details: "Dual air tank pressure leaks, spring brake chamber lock clearing, pneumatic valve repair, and shoe relining.",
     icon: "🛑",
-    color: '#FF3D2E',
-    turnaround: "15–25 Min Dispatch"
+    color: '#F04438',
+    turnaround: "15–25 Min Target"
   },
   {
     id: 'tyres',
@@ -91,8 +101,8 @@ export const SERVICES = [
     desc: "Puncture, replacement and tyre service on the go.",
     details: "Heavy commercial radial tyre vulcanizing, puncture patch, tubeless tyre rim bead seating, and wheel swap.",
     icon: "⭕",
-    color: '#00D97E',
-    turnaround: "15–30 Min Dispatch"
+    color: '#16A34A',
+    turnaround: "15–30 Min Target"
   },
   {
     id: 'battery',
@@ -100,8 +110,8 @@ export const SERVICES = [
     desc: "Battery jump-start, testing and replacement.",
     details: "Heavy-duty 24V jump-start booster pack, terminal corrosion repair, alternator voltage testing, and fresh battery swaps.",
     icon: "🔋",
-    color: '#FFD700',
-    turnaround: "15–20 Min Dispatch"
+    color: '#EAB308',
+    turnaround: "15–20 Min Target"
   },
   {
     id: 'body',
@@ -109,8 +119,8 @@ export const SERVICES = [
     desc: "Container repair, body work and structural fixes.",
     details: "Container sheet welding, rear door hinge locks, chassis structural reinforcement, and accident recovery.",
     icon: "📦",
-    color: '#3B8BFF',
-    turnaround: "30–45 Min Dispatch"
+    color: '#2563EB',
+    turnaround: "30–45 Min Target"
   },
 ];
 
@@ -123,7 +133,6 @@ export const HOTSPOTS = [
   { id: 'body', position: [1.2, 1.2, 0] as [number, number, number], label: 'Container', serviceId: 'body' },
 ];
 
-// ============ 3D TRUCK MODEL & WHEEL (Procedural) ============
 function Wheel({
   position,
   onClickPart,
@@ -152,25 +161,22 @@ function Wheel({
       }}
     >
       <group ref={wheelRef} rotation={[0, 0, Math.PI / 2]}>
-        {/* Outer tyre */}
         <mesh castShadow receiveShadow>
           <cylinderGeometry args={[0.38, 0.38, 0.28, 24]} />
           <meshStandardMaterial
-            color={active ? '#FF5A1F' : '#14161f'}
+            color={active ? '#F04438' : '#14161f'}
             roughness={0.9}
             metalness={0.1}
           />
         </mesh>
-        {/* Steel Rim */}
         <mesh position={[0, 0, 0]}>
           <cylinderGeometry args={[0.24, 0.24, 0.29, 16]} />
           <meshStandardMaterial
-            color={active ? '#FFD700' : '#4a5568'}
+            color={active ? '#2563EB' : '#4a5568'}
             metalness={0.8}
             roughness={0.3}
           />
         </mesh>
-        {/* Heavy Hub Nut */}
         <mesh position={[0, 0, 0]}>
           <cylinderGeometry args={[0.1, 0.1, 0.31, 12]} />
           <meshStandardMaterial color="#2d3748" metalness={0.9} roughness={0.2} />
@@ -201,48 +207,40 @@ function TruckModel({
   });
 
   const partColor = (partId: string, baseColor: string) =>
-    activePart === partId ? '#FF5A1F' : baseColor;
+    activePart === partId ? '#F04438' : baseColor;
 
   return (
     <group ref={group} position={[0, -0.3, 0]}>
-      {/* ===== CONTAINER BODY ===== */}
       <group onClick={(e) => { e.stopPropagation(); onPartClick('body'); }}>
         <mesh position={[1.2, 0.8, 0]} castShadow receiveShadow>
           <boxGeometry args={[3.4, 1.8, 2]} />
-          <meshStandardMaterial color={partColor('body', '#1a1c24')} metalness={0.6} roughness={0.4} />
+          <meshStandardMaterial color={partColor('body', '#181C26')} metalness={0.6} roughness={0.4} />
         </mesh>
-        {/* Container ridges */}
         {[-0.8, -0.2, 0.4, 1.0, 1.6, 2.2].map((x, i) => (
           <mesh key={i} position={[x, 0.8, 1.01]} castShadow>
             <boxGeometry args={[0.04, 1.7, 0.02]} />
-            <meshStandardMaterial color="#2a2d38" metalness={0.8} roughness={0.3} />
+            <meshStandardMaterial color="#282E3E" metalness={0.8} roughness={0.3} />
           </mesh>
         ))}
-        {/* Orange accent stripe */}
         <mesh position={[1.2, 0.5, 1.02]}>
           <boxGeometry args={[3.4, 0.06, 0.01]} />
-          <meshStandardMaterial color="#FF5A1F" emissive="#FF5A1F" emissiveIntensity={0.5} />
+          <meshStandardMaterial color="#2563EB" emissive="#2563EB" emissiveIntensity={0.6} />
         </mesh>
-        {/* TRUCKWALA branding */}
         <mesh position={[1.2, 1.2, 1.02]}>
           <planeGeometry args={[2.4, 0.3]} />
-          <meshStandardMaterial color="#0a0b10" transparent opacity={0.9} />
+          <meshStandardMaterial color="#0A0D14" transparent opacity={0.92} />
         </mesh>
       </group>
 
-      {/* ===== CAB ===== */}
       <group onClick={(e) => { e.stopPropagation(); onPartClick('cabin'); }}>
-        {/* Cab main body */}
         <mesh position={[-1.8, 0.6, 0]} castShadow receiveShadow>
           <boxGeometry args={[1.4, 1.4, 2]} />
-          <meshStandardMaterial color={partColor('cabin', '#3B8BFF')} metalness={0.7} roughness={0.3} />
+          <meshStandardMaterial color={partColor('cabin', '#2563EB')} metalness={0.7} roughness={0.3} />
         </mesh>
-        {/* Cab roof */}
         <mesh position={[-1.8, 1.4, 0]} castShadow>
           <boxGeometry args={[1.3, 0.15, 1.9]} />
-          <meshStandardMaterial color="#2a5cc4" metalness={0.7} roughness={0.3} />
+          <meshStandardMaterial color="#1D4ED8" metalness={0.7} roughness={0.3} />
         </mesh>
-        {/* Windshield */}
         <mesh position={[-2.45, 0.9, 0]} rotation={[0, 0, 0.15]}>
           <boxGeometry args={[0.05, 0.8, 1.7]} />
           <meshStandardMaterial
@@ -255,29 +253,24 @@ function TruckModel({
             emissiveIntensity={0.2}
           />
         </mesh>
-        {/* Side window */}
         <mesh position={[-1.8, 0.9, 1.01]}>
           <boxGeometry args={[0.9, 0.5, 0.02]} />
           <meshStandardMaterial color="#2DD4FF" metalness={0.9} roughness={0.1} transparent opacity={0.5} />
         </mesh>
-        {/* Door line */}
         <mesh position={[-1.8, 0.3, 1.01]}>
           <boxGeometry args={[1.2, 0.02, 0.01]} />
-          <meshStandardMaterial color="#1a3a7a" />
+          <meshStandardMaterial color="#1E3A8A" />
         </mesh>
-        {/* Door handle */}
         <mesh position={[-1.5, 0.5, 1.02]}>
           <boxGeometry args={[0.15, 0.03, 0.02]} />
-          <meshStandardMaterial color="#6aa9ff" metalness={0.9} />
+          <meshStandardMaterial color="#93C5FD" metalness={0.9} />
         </mesh>
-        {/* Side mirror */}
         <mesh position={[-2.3, 1.1, 1.1]}>
           <boxGeometry args={[0.08, 0.15, 0.1]} />
-          <meshStandardMaterial color="#1a1c24" metalness={0.8} />
+          <meshStandardMaterial color="#181C26" metalness={0.8} />
         </mesh>
       </group>
 
-      {/* ===== HEADLIGHTS ===== */}
       <group>
         <mesh position={[-2.5, 0.4, 0.6]}>
           <boxGeometry args={[0.05, 0.15, 0.25]} />
@@ -291,57 +284,50 @@ function TruckModel({
         <pointLight ref={headlightR} position={[-3, 0.4, -0.6]} color="#fff4c2" intensity={2} distance={5} />
       </group>
 
-      {/* ===== GRILLE ===== */}
       <mesh position={[-2.5, 0.1, 0]}>
         <boxGeometry args={[0.05, 0.4, 1.2]} />
-        <meshStandardMaterial color="#0a0b10" metalness={0.9} roughness={0.2} />
+        <meshStandardMaterial color="#0A0D14" metalness={0.9} roughness={0.2} />
       </mesh>
 
-      {/* ===== BUMPER ===== */}
       <mesh position={[-2.4, -0.2, 0]} castShadow>
         <boxGeometry args={[0.2, 0.2, 2.1]} />
-        <meshStandardMaterial color="#1a1c24" metalness={0.8} roughness={0.3} />
+        <meshStandardMaterial color="#181C26" metalness={0.8} roughness={0.3} />
       </mesh>
 
-      {/* ===== ENGINE AREA (clickable) ===== */}
       <group onClick={(e) => { e.stopPropagation(); onPartClick('engine'); }}>
         <mesh position={[-2.1, 0.2, 0]}>
           <boxGeometry args={[0.8, 0.6, 1.5]} />
           <meshStandardMaterial
-            color={partColor('engine', '#2a2d38')}
+            color={partColor('engine', '#282E3E')}
             transparent
             opacity={activePart === 'engine' ? 0.6 : 0.05}
-            emissive={activePart === 'engine' ? '#FF5A1F' : '#000000'}
+            emissive={activePart === 'engine' ? '#F04438' : '#000000'}
             emissiveIntensity={activePart === 'engine' ? 0.5 : 0}
           />
         </mesh>
       </group>
 
-      {/* ===== CHASSIS ===== */}
       <mesh position={[0, -0.3, 0]} castShadow>
         <boxGeometry args={[5.2, 0.15, 1.6]} />
-        <meshStandardMaterial color="#0a0b10" metalness={0.8} roughness={0.4} />
+        <meshStandardMaterial color="#0A0D14" metalness={0.8} roughness={0.4} />
       </mesh>
 
-      {/* ===== FUEL TANK ===== */}
       <mesh position={[-0.8, -0.1, 1]} castShadow>
         <boxGeometry args={[0.6, 0.4, 0.3]} />
-        <meshStandardMaterial color="#1a1c24" metalness={0.7} roughness={0.4} />
+        <meshStandardMaterial color="#181C26" metalness={0.7} roughness={0.4} />
       </mesh>
 
-      {/* ===== BATTERY (clickable) ===== */}
       <group onClick={(e) => { e.stopPropagation(); onPartClick('battery'); }}>
         <mesh position={[-2.2, 0.2, -0.8]} castShadow>
           <boxGeometry args={[0.35, 0.3, 0.25]} />
-          <meshStandardMaterial color={partColor('battery', '#1a1c24')} metalness={0.6} roughness={0.5} />
+          <meshStandardMaterial color={partColor('battery', '#181C26')} metalness={0.6} roughness={0.5} />
         </mesh>
         <mesh position={[-2.2, 0.37, -0.8]}>
           <cylinderGeometry args={[0.03, 0.03, 0.05, 8]} />
-          <meshStandardMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.5} />
+          <meshStandardMaterial color="#EAB308" emissive="#EAB308" emissiveIntensity={0.5} />
         </mesh>
       </group>
 
-      {/* ===== WHEELS ===== */}
       {[
         { pos: [-1.8, -0.5, 1.1] as [number, number, number], id: null },
         { pos: [-1.8, -0.5, -1.1] as [number, number, number], id: null },
@@ -360,16 +346,15 @@ function TruckModel({
         />
       ))}
 
-      {/* ===== MUDGUARDS ===== */}
       {[-1.8, 0.8, 1.8, 2.4].map((x, i) => (
         <group key={i}>
           <mesh position={[x, -0.2, 1.15]}>
             <boxGeometry args={[0.8, 0.1, 0.1]} />
-            <meshStandardMaterial color="#1a1c24" metalness={0.7} />
+            <meshStandardMaterial color="#181C26" metalness={0.7} />
           </mesh>
           <mesh position={[x, -0.2, -1.15]}>
             <boxGeometry args={[0.8, 0.1, 0.1]} />
-            <meshStandardMaterial color="#1a1c24" metalness={0.7} />
+            <meshStandardMaterial color="#181C26" metalness={0.7} />
           </mesh>
         </group>
       ))}
@@ -377,7 +362,6 @@ function TruckModel({
   );
 }
 
-// 3D Procedural Hotspot Marker (Pure WebGL - zero DOM unmount race conditions)
 function HotspotMarker({
   position,
   active,
@@ -421,33 +405,30 @@ function HotspotMarker({
         document.body.style.cursor = 'auto';
       }}
     >
-      {/* Center glowing orb */}
       <mesh castShadow>
         <sphereGeometry args={[0.09, 16, 16]} />
         <meshStandardMaterial
-          color={active ? '#FF5A1F' : hovered ? '#2DD4FF' : '#3B8BFF'}
-          emissive={active ? '#FF5A1F' : hovered ? '#2DD4FF' : '#3B8BFF'}
+          color={active ? '#F04438' : hovered ? '#2563EB' : '#16A34A'}
+          emissive={active ? '#F04438' : hovered ? '#2563EB' : '#16A34A'}
           emissiveIntensity={active ? 2.5 : 1.4}
         />
       </mesh>
 
-      {/* Pulsing glow halo ring */}
       <mesh ref={ringRef} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.11, 0.16, 32]} />
         <meshBasicMaterial
-          color={active ? '#FF5A1F' : '#2DD4FF'}
+          color={active ? '#F04438' : '#2563EB'}
           transparent
           opacity={0.8}
           side={THREE.DoubleSide}
         />
       </mesh>
 
-      {/* Anchor Stalk to Truck Frame */}
       <mesh position={[0, -0.08, 0]}>
         <cylinderGeometry args={[0.012, 0.005, 0.16, 8]} />
         <meshStandardMaterial
-          color={active ? '#FF5A1F' : '#4a5568'}
-          emissive={active ? '#FF5A1F' : '#1a202c'}
+          color={active ? '#F04438' : '#4a5568'}
+          emissive={active ? '#F04438' : '#1a202c'}
           emissiveIntensity={0.3}
         />
       </mesh>
@@ -458,67 +439,88 @@ function HotspotMarker({
 // ============ HEADER ============
 function Header({
   onOpenSOS,
+  onOpenMyTickets,
   onTrackAction,
+  viewMode,
+  setViewMode,
 }: {
   onOpenSOS: () => void;
+  onOpenMyTickets: () => void;
   onTrackAction: (type: TrackingEventType, label: string) => void;
+  viewMode: 'ALL' | 'RESCUE_3D' | 'LOGISTICS_STRATEGY';
+  setViewMode: (m: 'ALL' | 'RESCUE_3D' | 'LOGISTICS_STRATEGY') => void;
 }) {
   return (
-    <header className="sticky top-0 z-40 bg-[#0A0B10]/90 backdrop-blur-md border-b border-slate-800">
+    <header className="sticky top-0 z-40 bg-[#0A0D14]/92 backdrop-blur-md border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
-        {/* Brand */}
+        {/* Brand Wordmark Treatment */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#FF5A1F] to-[#E0440E] flex items-center justify-center font-black text-white text-xl shadow-lg shadow-[#FF5A1F]/30 ring-1 ring-white/20">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] flex items-center justify-center font-black text-white text-xl shadow-lg shadow-blue-900/30 ring-1 ring-white/20">
             T
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-xl tracking-tight text-white font-display">
-                {CONFIG.business.name}
+              <span className="font-extrabold text-xl tracking-tight font-display flex items-baseline gap-1">
+                <span className="text-[#2563EB]">TRUCK</span>
+                <span className="text-[#F04438]">WALA</span>
+                <span className="text-[#16A34A]">24×7</span>
               </span>
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#00D97E]/15 text-[#00D97E] border border-[#00D97E]/30">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00D97E] animate-pulse" />
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#16A34A]/15 text-[#16A34A] border border-[#16A34A]/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#16A34A] animate-pulse" />
                 24×7 ACTIVE
               </span>
             </div>
             <p className="text-xs text-slate-400 hidden sm:block">
-              {CONFIG.business.corridor} · Gadan Khera Bypass
+              {CONFIG.business.corridor} · Gadan Khera & Panki Hub
             </p>
           </div>
         </div>
 
-        {/* Navigation Anchors */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
-          <a href="#hero-3d" className="hover:text-[#FF5A1F] transition-colors">
-            3D Explorer
+        {/* View Switcher Pill & Navigation */}
+        <nav className="hidden lg:flex items-center gap-4 text-xs font-semibold text-slate-300">
+          <a href="#hero-3d" className="hover:text-[#2563EB] transition-colors">
+            3D Visualizer
           </a>
-          <a href="#services" className="hover:text-[#FF5A1F] transition-colors">
-            Services
+          <a href="#driver-quick-connect" className="hover:text-[#16A34A] transition-colors flex items-center gap-1 text-emerald-400">
+            <span>💬 Quick-Connect</span>
           </a>
-          <a href="#diagnostics" className="hover:text-[#FF5A1F] transition-colors">
-            Highway Faults
+          <a href="#live-tracking" className="hover:text-[#2563EB] transition-colors flex items-center gap-1">
+            <Gamepad2 className="w-3.5 h-3.5 text-[#3B82F6]" />
+            <span>Fleet Simulator</span>
           </a>
-          <a href="#location" className="hover:text-[#FF5A1F] transition-colors">
-            Corridor Hub
+          <a href="#vehicle-coverage" className="hover:text-[#2563EB] transition-colors">
+            Mahindra & Models
+          </a>
+          <a href="#seo-knowledge-faq" className="hover:text-[#2563EB] transition-colors">
+            Highway FAQs
           </a>
           <a
             href="/vanilla/index.html"
             className="flex items-center gap-1 text-slate-400 hover:text-white transition-colors"
             title="Open lightweight vanilla HTML version"
           >
-            Vanilla Web
+            <span>Vanilla Mode</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </nav>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <button
+            onClick={onOpenMyTickets}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-semibold transition-colors cursor-pointer"
+            title="View my breakdown tickets & saved quotes"
+          >
+            <FileText className="w-3.5 h-3.5 text-[#2563EB]" />
+            <span className="hidden sm:inline">My Tickets</span>
+          </button>
+
           <a
             href={`tel:${CONFIG.business.phone}`}
             onClick={() => onTrackAction('CALL_CLICK', 'Header Call Direct')}
-            className="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition-colors"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition-colors"
           >
-            <Phone className="w-3.5 h-3.5 text-[#00D97E]" />
+            <Phone className="w-3.5 h-3.5 text-[#16A34A]" />
             <span>Call 24×7</span>
           </a>
 
@@ -529,7 +531,7 @@ function Header({
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => onTrackAction('WHATSAPP_CLICK', 'Header WhatsApp Direct')}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] border border-[#25D366]/40 text-xs font-semibold transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#16A34A]/20 hover:bg-[#16A34A]/30 text-[#16A34A] border border-[#16A34A]/40 text-xs font-semibold transition-colors"
           >
             <MessageSquare className="w-3.5 h-3.5" />
             <span className="hidden xs:inline">WhatsApp</span>
@@ -540,7 +542,7 @@ function Header({
               onTrackAction('JOB_REQUESTED', 'Header SOS Clicked');
               onOpenSOS();
             }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-[#FF5A1F] to-[#E0440E] hover:from-[#ff6b36] hover:to-[#ea521e] text-white text-xs sm:text-sm font-bold shadow-lg shadow-[#FF5A1F]/30 transition-all hover:scale-105 active:scale-95 cursor-pointer ring-1 ring-white/20"
+            className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl bg-[#F04438] hover:bg-red-700 text-white text-xs sm:text-sm font-bold shadow-lg shadow-red-950/40 transition-all hover:scale-105 active:scale-95 cursor-pointer ring-1 ring-white/20"
           >
             <AlertTriangle className="w-4 h-4 animate-bounce" />
             <span>EMERGENCY SOS</span>
@@ -571,10 +573,9 @@ function Hero3D({
   };
 
   return (
-    <section id="hero-3d" className="relative min-h-[750px] lg:h-[860px] bg-[#0A0B10] border-b border-slate-800 overflow-hidden flex flex-col justify-between">
-      {/* 3D Ambient Lighting Gradients */}
+    <section id="hero-3d" className="relative min-h-[750px] lg:h-[860px] bg-[#0A0D14] border-b border-slate-800 overflow-hidden flex flex-col justify-between">
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-[#3B8BFF]/10 via-[#FF5A1F]/10 to-transparent blur-[120px] rounded-full" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-[#2563EB]/10 via-[#F04438]/10 to-transparent blur-[120px] rounded-full" />
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
@@ -584,10 +585,9 @@ function Hero3D({
         />
       </div>
 
-      {/* Hero Top Copy Banner */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/80 border border-slate-700/80 text-xs font-semibold text-slate-300 mb-3 backdrop-blur-md">
-          <Sparkles className="w-3.5 h-3.5 text-[#FF5A1F]" />
+          <Sparkles className="w-3.5 h-3.5 text-[#2563EB]" />
           <span>Interactive 3D Heavy Fleet Diagnostic Model</span>
         </div>
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight uppercase font-display max-w-4xl mx-auto leading-none">
@@ -597,7 +597,6 @@ function Hero3D({
           Rotate and interact with the commercial truck in 3D. Click any component or hotspot to diagnose roadside faults and dispatch highway rescue.
         </p>
 
-        {/* Quick Part Filter Chips */}
         <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 max-w-3xl mx-auto">
           {SERVICES.map((s) => {
             const isSelected = activePart === s.id;
@@ -605,9 +604,9 @@ function Hero3D({
               <button
                 key={s.id}
                 onClick={() => handleSelectHotspot(s.id)}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
                   isSelected
-                    ? 'bg-[#FF5A1F] text-white shadow-lg shadow-[#FF5A1F]/40 ring-2 ring-white/40 scale-105'
+                    ? 'bg-[#2563EB] text-white shadow-lg shadow-blue-900/40 ring-2 ring-white/40 scale-105'
                     : 'bg-slate-900/80 text-slate-300 border border-slate-800 hover:border-slate-600 hover:text-white'
                 }`}
               >
@@ -619,7 +618,7 @@ function Hero3D({
           {activePart && (
             <button
               onClick={() => setActivePart(null)}
-              className="px-2.5 py-1.5 rounded-full text-xs font-semibold bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white border border-slate-700 transition-colors cursor-pointer flex items-center gap-1"
+              className="px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white border border-slate-700 transition-colors cursor-pointer flex items-center gap-1"
             >
               <RotateCw className="w-3 h-3" />
               <span>Reset</span>
@@ -628,7 +627,6 @@ function Hero3D({
         </div>
       </div>
 
-      {/* 3D Canvas Container */}
       <div className="relative flex-1 w-full min-h-[420px] lg:min-h-[500px] z-10">
         <Canvas
           shadows
@@ -642,8 +640,8 @@ function Hero3D({
             castShadow
             shadow-mapSize={[1024, 1024]}
           />
-          <directionalLight position={[-6, 4, -4]} intensity={0.6} color="#3B8BFF" />
-          <pointLight position={[0, -1, 0]} intensity={0.9} color="#FF5A1F" distance={6} />
+          <directionalLight position={[-6, 4, -4]} intensity={0.6} color="#2563EB" />
+          <pointLight position={[0, -1, 0]} intensity={0.9} color="#F04438" distance={6} />
 
           <Suspense fallback={null}>
             <TruckModel
@@ -651,7 +649,6 @@ function Hero3D({
               activePart={activePart}
             />
 
-            {/* Hotspots rendered directly in 3D Space */}
             {HOTSPOTS.map((h) => (
               <HotspotMarker
                 key={h.id}
@@ -682,13 +679,11 @@ function Hero3D({
           />
         </Canvas>
 
-        {/* 3D Navigation Controls Hint */}
-        <div className="absolute bottom-4 left-4 z-20 pointer-events-none hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/60 border border-slate-800 text-xs text-slate-400 backdrop-blur-md">
-          <RotateCw className="w-3.5 h-3.5 text-[#3B8BFF]" />
+        <div className="absolute bottom-4 left-4 z-20 pointer-events-none hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-black/60 border border-slate-800 text-xs text-slate-400 backdrop-blur-md">
+          <RotateCw className="w-3.5 h-3.5 text-[#2563EB]" />
           <span>Click & Drag to Rotate · Scroll to Zoom · Tap Components</span>
         </div>
 
-        {/* Selected Part Detail Overlay Floating Card */}
         <AnimatePresence>
           {activeService && (
             <motion.div
@@ -696,7 +691,7 @@ function Hero3D({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
               transition={{ duration: 0.25 }}
-              className="absolute bottom-4 right-4 sm:right-6 max-w-sm sm:max-w-md w-[calc(100%-2rem)] z-30 bg-[#12141C]/95 border-2 rounded-2xl p-5 shadow-2xl backdrop-blur-xl"
+              className="absolute bottom-4 right-4 sm:right-6 max-w-sm sm:max-w-md w-[calc(100%-2rem)] z-30 bg-[#101422]/95 border-2 rounded-2xl p-5 shadow-2xl backdrop-blur-xl"
               style={{ borderColor: activeService.color }}
             >
               <div className="flex items-start justify-between gap-3">
@@ -713,7 +708,7 @@ function Hero3D({
                         {activeService.name}
                       </h3>
                       <span
-                        className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider text-black"
+                        className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider text-white"
                         style={{ backgroundColor: activeService.color }}
                       >
                         Selected
@@ -746,8 +741,7 @@ function Hero3D({
                     onTrackAction('JOB_REQUESTED', `Dispatch Van: ${activeService.name}`);
                     onOpenSOS();
                   }}
-                  className="flex-1 py-2.5 px-3 rounded-lg text-white text-xs font-bold transition-all shadow-lg flex items-center justify-center gap-1.5 cursor-pointer ring-1 ring-white/20"
-                  style={{ backgroundColor: activeService.color }}
+                  className="flex-1 py-2.5 px-3 rounded-xl text-white text-xs font-bold transition-all shadow-lg flex items-center justify-center gap-1.5 cursor-pointer ring-1 ring-white/20 bg-[#F04438] hover:bg-red-700"
                 >
                   <AlertTriangle className="w-3.5 h-3.5" />
                   <span>Dispatch Van Now</span>
@@ -762,7 +756,7 @@ function Hero3D({
                   onClick={() =>
                     onTrackAction('WHATSAPP_CLICK', `WhatsApp Part: ${activeService.name}`)
                   }
-                  className="p-2.5 rounded-lg bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] border border-[#25D366]/40 transition-colors"
+                  className="p-2.5 rounded-xl bg-[#16A34A]/20 hover:bg-[#16A34A]/30 text-[#16A34A] border border-[#16A34A]/40 transition-colors"
                   title="WhatsApp this issue"
                 >
                   <MessageSquare className="w-4 h-4" />
@@ -773,7 +767,7 @@ function Hero3D({
                   onClick={() =>
                     onTrackAction('CALL_CLICK', `Call Part: ${activeService.name}`)
                   }
-                  className="p-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors"
+                  className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors"
                   title="Call Emergency Line"
                 >
                   <Phone className="w-4 h-4" />
@@ -784,18 +778,17 @@ function Hero3D({
         </AnimatePresence>
       </div>
 
-      {/* Hero Bottom Strip: Immediate Highway Dispatch Status */}
       <div className="relative z-10 bg-slate-950/80 border-t border-slate-800/80 backdrop-blur-md py-3 px-4">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs text-slate-300">
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 text-slate-400 font-medium">
-              <MapPin className="w-4 h-4 text-[#FF5A1F]" />
+              <MapPin className="w-4 h-4 text-[#F04438]" />
               Highway Hub: Gadan Khera Bypass, Unnao
             </span>
             <span className="hidden md:inline text-slate-600">|</span>
             <span className="hidden md:flex items-center gap-1.5 text-slate-400 font-medium">
-              <Clock className="w-4 h-4 text-[#3B8BFF]" />
-              Average Arrival SLA: 15–30 Minutes
+              <Clock className="w-4 h-4 text-[#2563EB]" />
+              Arrival Target: 15–30 Minutes on NH-27 Corridor
             </span>
           </div>
 
@@ -803,7 +796,7 @@ function Hero3D({
             <span className="text-slate-400">Need immediate help?</span>
             <a
               href={`tel:${CONFIG.business.phone}`}
-              className="font-bold text-[#FF5A1F] hover:underline"
+              className="font-bold text-[#F04438] hover:underline"
             >
               {CONFIG.business.phoneDisplay}
             </a>
@@ -825,10 +818,10 @@ function ServicesGrid({
   onTrackAction: (type: TrackingEventType, label: string) => void;
 }) {
   return (
-    <section id="services" className="py-16 sm:py-24 bg-[#0A0B10] border-b border-slate-800">
+    <section id="services" className="py-16 sm:py-24 bg-[#0A0D14] border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-[#FF5A1F] mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-[#2563EB] mb-3">
             <Wrench className="w-3.5 h-3.5" />
             <span>Heavy Commercial Vehicle Specialization</span>
           </div>
@@ -836,7 +829,7 @@ function ServicesGrid({
             Comprehensive Services Under One Roof
           </h2>
           <p className="mt-3 text-slate-400 text-sm sm:text-base">
-            Equipped with mobile mechanical diagnostic vans, 24V jumpstart rigs, genuine OEM spares, and computerised ECM scanners.
+            Equipped with mobile mechanical diagnostic vans, 24V jumpstart rigs, genuine OEM spares, and computerized ECM scanners.
           </p>
         </div>
 
@@ -844,9 +837,8 @@ function ServicesGrid({
           {SERVICES.map((s) => (
             <div
               key={s.id}
-              className="group relative bg-[#12141C] border border-slate-800 hover:border-slate-600 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl overflow-hidden flex flex-col justify-between"
+              className="group relative bg-[#101420] border border-slate-800 hover:border-slate-600 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl overflow-hidden flex flex-col justify-between"
             >
-              {/* Top Accent Color Line */}
               <div
                 className="absolute top-0 left-0 right-0 h-1"
                 style={{ backgroundColor: s.color }}
@@ -884,9 +876,9 @@ function ServicesGrid({
                     const hero = document.getElementById('hero-3d');
                     if (hero) hero.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="flex-1 py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="flex-1 py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <RotateCw className="w-3.5 h-3.5 text-[#3B8BFF]" />
+                  <RotateCw className="w-3.5 h-3.5 text-[#2563EB]" />
                   <span>Inspect in 3D</span>
                 </button>
 
@@ -895,8 +887,7 @@ function ServicesGrid({
                     onTrackAction('JOB_REQUESTED', `Book Service: ${s.name}`);
                     onOpenSOS();
                   }}
-                  className="py-2 px-4 rounded-lg text-white text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1 cursor-pointer"
-                  style={{ backgroundColor: s.color }}
+                  className="py-2 px-4 rounded-xl text-white text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1 cursor-pointer bg-[#F04438] hover:bg-red-700"
                 >
                   <span>Book Van</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -915,38 +906,38 @@ function Stats() {
   const stats = [
     {
       value: "15–30 Min",
-      label: "Highway SLA",
-      sub: "Average dispatch time to breakdown spot on NH-27",
-      color: "#FF5A1F",
+      label: "Target Arrival Time",
+      sub: "Average highway response target from Gadan Khera hub on NH-27",
+      color: "#F04438",
     },
     {
       value: "10,000+",
-      label: "Vehicles Rescued",
-      sub: "Heavy multi-axle trailers, tippers, containers, & BS6 trucks",
-      color: "#3B8BFF",
+      label: "Breakdown Assists",
+      sub: "Commercial trailers, tippers, containers, & BS-VI fleets supported",
+      color: "#2563EB",
     },
     {
       value: "24/7/365",
-      label: "Always Ready",
-      sub: "Dedicated day & night highway breakdown response vans",
-      color: "#00D97E",
+      label: "Highway Standby",
+      sub: "Dedicated day & night mobile repair vans stationed on corridor",
+      color: "#16A34A",
     },
     {
-      value: "100%",
-      label: "Genuine Spares",
-      sub: "OEM sensors, air valves, bearings, belts, and DEF solutions",
+      value: "OEM Spares",
+      label: "Genuine Components",
+      sub: "Wabco/Knorr air valves, Fleetguard filters, genuine DEF & sensors",
       color: "#2DD4FF",
     },
   ];
 
   return (
-    <section className="py-16 bg-[#080C13] border-b border-slate-800">
+    <section className="py-16 bg-[#080B12] border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((st, i) => (
             <div
               key={i}
-              className="bg-[#10131B] border border-slate-800/80 rounded-2xl p-6 relative overflow-hidden flex flex-col justify-between"
+              className="bg-[#0F131E] border border-slate-800/80 rounded-2xl p-6 relative overflow-hidden flex flex-col justify-between"
             >
               <div
                 className="absolute top-0 right-0 w-24 h-24 rounded-full blur-3xl opacity-20 pointer-events-none"
@@ -977,35 +968,37 @@ function Stats() {
 // ============ FOOTER ============
 function Footer({
   onOpenSOS,
+  onOpenMyTickets,
   onTrackAction,
 }: {
   onOpenSOS: () => void;
+  onOpenMyTickets: () => void;
   onTrackAction: (type: TrackingEventType, label: string) => void;
 }) {
   return (
-    <footer className="bg-[#07080D] text-slate-400 pt-16 pb-28 sm:pb-16 border-t border-slate-800 text-sm">
+    <footer className="bg-[#06080E] text-slate-400 pt-16 pb-28 sm:pb-20 border-t border-slate-800 text-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-          {/* Brand Col */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-lg bg-[#FF5A1F] flex items-center justify-center font-black text-white text-lg">
+              <div className="w-9 h-9 rounded-xl bg-[#2563EB] flex items-center justify-center font-black text-white text-lg">
                 T
               </div>
-              <span className="text-xl font-extrabold text-white tracking-tight font-display">
-                {CONFIG.business.name}
+              <span className="text-xl font-extrabold tracking-tight font-display flex items-baseline gap-1">
+                <span className="text-[#2563EB]">TRUCK</span>
+                <span className="text-[#F04438]">WALA</span>
+                <span className="text-[#16A34A]">24×7</span>
               </span>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed mb-4">
               {CONFIG.business.tagline}. On-site mechanical repairs, ECM scanning, tyre services, and heavy towing dispatch across Uttar Pradesh.
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-300">
-              <Radio className="w-3.5 h-3.5 text-[#00D97E] animate-pulse" />
-              <span>Corridor Highway Patrol Active</span>
+              <Radio className="w-3.5 h-3.5 text-[#16A34A] animate-pulse" />
+              <span>Corridor Highway Standby Active</span>
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h4 className="text-white font-bold mb-4 font-display uppercase tracking-wider text-xs">
               Corridor Hub & Navigation
@@ -1014,6 +1007,16 @@ function Footer({
               <li>
                 <a href="#hero-3d" className="hover:text-white transition-colors">
                   3D Interactive Truck Model
+                </a>
+              </li>
+              <li>
+                <a href="#live-tracking" className="hover:text-white transition-colors">
+                  Logistics Strategy Simulator
+                </a>
+              </li>
+              <li>
+                <a href="#booking-calculator" className="hover:text-white transition-colors">
+                  Fast Freight Calculator
                 </a>
               </li>
               <li>
@@ -1027,14 +1030,17 @@ function Footer({
                 </a>
               </li>
               <li>
-                <a href="#location" className="hover:text-white transition-colors">
-                  Gadan Khera Bypass Map
-                </a>
+                <button
+                  onClick={onOpenMyTickets}
+                  className="hover:text-[#2563EB] text-slate-300 transition-colors flex items-center gap-1 cursor-pointer"
+                >
+                  <span>My Breakdown Tickets</span>
+                </button>
               </li>
               <li>
                 <a
                   href="/vanilla/index.html"
-                  className="hover:text-white transition-colors flex items-center gap-1.5 text-[#3B8BFF]"
+                  className="hover:text-white transition-colors flex items-center gap-1.5 text-[#2563EB]"
                 >
                   <span>Standalone Vanilla Web Page</span>
                   <ExternalLink className="w-3 h-3" />
@@ -1043,7 +1049,6 @@ function Footer({
             </ul>
           </div>
 
-          {/* Location & GPS */}
           <div>
             <h4 className="text-white font-bold mb-4 font-display uppercase tracking-wider text-xs">
               Highway Location
@@ -1059,14 +1064,13 @@ function Footer({
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => onTrackAction('MAP_CLICK', 'Footer Directions Click')}
-              className="inline-flex items-center gap-1.5 text-xs text-[#FF5A1F] hover:underline font-semibold"
+              className="inline-flex items-center gap-1.5 text-xs text-[#2563EB] hover:underline font-semibold"
             >
               <Navigation className="w-3.5 h-3.5" />
               <span>Open in Google Maps</span>
             </a>
           </div>
 
-          {/* Emergency Dispatch Hotline */}
           <div>
             <h4 className="text-white font-bold mb-4 font-display uppercase tracking-wider text-xs">
               24×7 Highway Dispatch
@@ -1077,9 +1081,9 @@ function Footer({
             <a
               href={`tel:${CONFIG.business.phone}`}
               onClick={() => onTrackAction('CALL_CLICK', 'Footer Direct Call')}
-              className="flex items-center gap-2 p-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-[#FF5A1F] transition-colors mb-3 group"
+              className="flex items-center gap-2 p-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-[#F04438] transition-colors mb-3 group"
             >
-              <Phone className="w-4 h-4 text-[#00D97E] group-hover:scale-110 transition-transform" />
+              <Phone className="w-4 h-4 text-[#16A34A] group-hover:scale-110 transition-transform" />
               <div>
                 <p className="text-[10px] text-slate-400">Emergency Phone</p>
                 <p className="text-sm font-bold text-white">{CONFIG.business.phoneDisplay}</p>
@@ -1099,6 +1103,10 @@ function Footer({
             <a href="/vanilla/index.html" className="text-slate-400 hover:text-white transition-colors">
               Vanilla Version
             </a>
+            <span>·</span>
+            <a href="/logistics/index.html" className="text-slate-400 hover:text-white transition-colors">
+              Logistics Page
+            </a>
           </div>
         </div>
       </div>
@@ -1109,49 +1117,58 @@ function Footer({
 // ============ FLOATING SOS BAR ============
 function FloatingSOS({
   onOpenSOS,
+  onOpenMyTickets,
   onTrackAction,
 }: {
   onOpenSOS: () => void;
+  onOpenMyTickets: () => void;
   onTrackAction: (type: TrackingEventType, label: string) => void;
 }) {
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-3 sm:p-4 bg-[#0A0B10]/95 backdrop-blur-lg border-t border-slate-800 shadow-2xl flex items-center justify-between gap-2 sm:gap-4 max-w-4xl mx-auto sm:bottom-4 sm:rounded-2xl sm:border">
-      {/* Mobile Highway SOS button */}
-      <button
-        onClick={() => {
-          onTrackAction('JOB_REQUESTED', 'Floating Bar SOS Pressed');
-          onOpenSOS();
-        }}
-        className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-[#FF5A1F] to-[#E0440E] hover:from-[#ff6b36] hover:to-[#ea521e] text-white font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-[#FF5A1F]/30 ring-1 ring-white/30 transition-transform active:scale-95 cursor-pointer"
-      >
-        <AlertTriangle className="w-5 h-5 animate-bounce" />
-        <span>INSTANT HIGHWAY SOS</span>
-      </button>
+    <aside aria-label="Emergency quick actions" className="fixed bottom-0 left-0 right-0 z-40 p-3 sm:p-4 bg-[#0A0D14]/95 backdrop-blur-lg border-t border-slate-800 shadow-2xl max-w-4xl mx-auto sm:bottom-4 sm:rounded-2xl sm:border">
+      <div className="flex items-center justify-between gap-2 sm:gap-3">
+        <button
+          onClick={() => {
+            onTrackAction('JOB_REQUESTED', 'Floating Bar SOS Pressed');
+            onOpenSOS();
+          }}
+          className="flex-1 py-3 px-4 rounded-xl bg-[#F04438] hover:bg-red-700 text-white font-extrabold text-xs sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-red-950/40 ring-1 ring-white/30 transition-transform active:scale-95 cursor-pointer"
+        >
+          <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 animate-bounce" />
+          <span>INSTANT HIGHWAY SOS</span>
+        </button>
 
-      {/* WhatsApp Location Share Button */}
-      <a
-        href={`https://wa.me/${CONFIG.business.whatsapp}?text=${encodeURIComponent(
-          'EMERGENCY: Truck Breakdown on Kanpur–Unnao NH-27 Corridor. Please send immediate rescue van.'
-        )}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={() => onTrackAction('WHATSAPP_CLICK', 'Floating Bar WhatsApp')}
-        className="p-3 rounded-xl bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] border border-[#25D366]/40 flex items-center justify-center transition-colors"
-        title="Share Location on WhatsApp"
-      >
-        <MessageSquare className="w-5 h-5" />
-      </a>
+        <button
+          onClick={onOpenMyTickets}
+          className="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center justify-center transition-colors cursor-pointer"
+          title="View my breakdown tickets & saved quotes"
+        >
+          <FileText className="w-5 h-5 text-[#2563EB]" />
+        </button>
 
-      {/* Direct Call Button */}
-      <a
-        href={`tel:${CONFIG.business.phone}`}
-        onClick={() => onTrackAction('CALL_CLICK', 'Floating Bar Call')}
-        className="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 flex items-center justify-center transition-colors"
-        title="Direct Emergency Hotline"
-      >
-        <Phone className="w-5 h-5 text-[#00D97E]" />
-      </a>
-    </div>
+        <a
+          href={`https://wa.me/${CONFIG.business.whatsapp}?text=${encodeURIComponent(
+            'EMERGENCY: Truck Breakdown on Kanpur–Unnao NH-27 Corridor. Please send immediate rescue van.'
+          )}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => onTrackAction('WHATSAPP_CLICK', 'Floating Bar WhatsApp')}
+          className="p-3 rounded-xl bg-[#16A34A]/20 hover:bg-[#16A34A]/30 text-[#16A34A] border border-[#16A34A]/40 flex items-center justify-center transition-colors"
+          title="Share Location on WhatsApp"
+        >
+          <MessageSquare className="w-5 h-5" />
+        </a>
+
+        <a
+          href={`tel:${CONFIG.business.phone}`}
+          onClick={() => onTrackAction('CALL_CLICK', 'Floating Bar Call')}
+          className="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 flex items-center justify-center transition-colors"
+          title="Direct Emergency Hotline"
+        >
+          <Phone className="w-5 h-5 text-[#16A34A]" />
+        </a>
+      </div>
+    </aside>
   );
 }
 
@@ -1159,13 +1176,14 @@ function FloatingSOS({
 export default function App() {
   const [activePart, setActivePart] = useState<string | null>(null);
   const [isSOSOpen, setIsSOSOpen] = useState(false);
+  const [isTicketsOpen, setIsTicketsOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'ALL' | 'RESCUE_3D' | 'LOGISTICS_STRATEGY'>('ALL');
 
   const handleTrackAction = (
     type: TrackingEventType,
     label: string,
     metadata?: Record<string, unknown>
   ) => {
-    // Structured telemetry logging
     if (typeof window !== 'undefined' && (window as unknown as { dataLayer?: unknown[] }).dataLayer) {
       (window as unknown as { dataLayer: unknown[] }).dataLayer.push({
         event: type,
@@ -1181,64 +1199,158 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0B10] text-slate-100 flex flex-col font-sans selection:bg-[#FF5A1F] selection:text-white">
+    <div className="min-h-screen bg-[#0A0D14] text-slate-100 flex flex-col font-sans selection:bg-[#2563EB] selection:text-white pb-32 sm:pb-24">
       {/* 01 - Header */}
       <Header
         onOpenSOS={() => setIsSOSOpen(true)}
+        onOpenMyTickets={() => setIsTicketsOpen(true)}
         onTrackAction={handleTrackAction}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
       />
 
-      {/* 02 - Hero 3D Interactive Website with R3F Canvas */}
-      <Hero3D
-        activePart={activePart}
-        setActivePart={setActivePart}
-        onOpenSOS={() => setIsSOSOpen(true)}
-        onTrackAction={handleTrackAction}
-      />
+      {/* 02 - View Mode Switcher Sticky Bar */}
+      <div className="bg-[#0F172A] border-b border-slate-800 py-2.5 px-4 sticky top-18 z-30 shadow-md">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-900 border border-slate-800">
+            <button
+              onClick={() => setViewMode('ALL')}
+              className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+                viewMode === 'ALL'
+                  ? 'bg-[#2563EB] text-white shadow'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              🌟 All Operations
+            </button>
+            <button
+              onClick={() => setViewMode('RESCUE_3D')}
+              className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                viewMode === 'RESCUE_3D'
+                  ? 'bg-[#F04438] text-white shadow'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <span>🛠️ 3D Breakdown Rescue</span>
+            </button>
+            <button
+              onClick={() => setViewMode('LOGISTICS_STRATEGY')}
+              className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                viewMode === 'LOGISTICS_STRATEGY'
+                  ? 'bg-[#3B82F6] text-white shadow'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <span>🎮 Strategy Fleet Command</span>
+            </button>
+          </div>
 
-      {/* 03 - Services Grid with 3D integration */}
-      <ServicesGrid
-        onSelectService={handleSelectServiceFromGrid}
-        onOpenSOS={() => setIsSOSOpen(true)}
-        onTrackAction={handleTrackAction}
-      />
+          <div className="flex items-center gap-3 text-slate-400 text-[11px]">
+            <span className="hidden sm:inline">Kanpur Panki Hub · Gadan Khera NH-27 Corridor</span>
+            <a
+              href="#booking-calculator"
+              className="text-[#F59E0B] hover:underline font-bold"
+            >
+              Instant Freight Quote ↗
+            </a>
+          </div>
+        </div>
+      </div>
 
-      {/* 04 - High-Impact Commercial Stats */}
-      <Stats />
+      {/* 03 - SECTION 1: 3D Procedural Truck Visualizer (Visible in ALL or RESCUE_3D) */}
+      {(viewMode === 'ALL' || viewMode === 'RESCUE_3D') && (
+        <>
+          <Hero3D
+            activePart={activePart}
+            setActivePart={setActivePart}
+            onOpenSOS={() => setIsSOSOpen(true)}
+            onTrackAction={handleTrackAction}
+          />
 
-      {/* 05 - Common Highway Diagnostics & Faults Guide */}
-      <div id="diagnostics">
-        <DiagnosticsGuide
-          onOpenSOS={() => setIsSOSOpen(true)}
+          <ServicesGrid
+            onSelectService={handleSelectServiceFromGrid}
+            onOpenSOS={() => setIsSOSOpen(true)}
+            onTrackAction={handleTrackAction}
+          />
+
+          <Stats />
+        </>
+      )}
+
+      {/* 04 - SECTION 2: Strategy Game Logistics Dashboard (Visible in ALL or LOGISTICS_STRATEGY) */}
+      {(viewMode === 'ALL' || viewMode === 'LOGISTICS_STRATEGY') && (
+        <LogisticsStrategyDashboard
           onTrackAction={handleTrackAction}
+          onOpenSOSModal={() => setIsSOSOpen(true)}
         />
-      </div>
+      )}
 
-      {/* 06 - Physical Workshop Hub & Geographic Corridor Map */}
-      <div id="location">
-        <LocationMap onTrackAction={handleTrackAction} />
-      </div>
+      {/* 05 - Supporting Operational Sections */}
+      {viewMode === 'ALL' && (
+        <>
+          <FreightQuoteEstimator
+            onTrackAction={handleTrackAction}
+            onOpenEmergencyModal={() => setIsSOSOpen(true)}
+          />
 
-      {/* 07 - Verified Fleet & Transporter Reviews */}
-      <ReviewsSection onTrackAction={handleTrackAction} />
+          <div id="diagnostics">
+            <DiagnosticsGuide
+              onOpenSOS={() => setIsSOSOpen(true)}
+              onTrackAction={handleTrackAction}
+            />
+          </div>
 
-      {/* 08 - Footer */}
+          <div id="vehicle-coverage">
+            <VehicleCoverage
+              onTrackAction={(type, label) => handleTrackAction(type, label)}
+            />
+          </div>
+
+          <FleetAndServiceForm
+            onTrackAction={handleTrackAction}
+          />
+
+          <div id="location">
+            <LocationMap onTrackAction={handleTrackAction} />
+          </div>
+
+          <ReviewsSection onTrackAction={handleTrackAction} />
+
+          <SeoKnowledgeFaqSection
+            onOpenSOS={() => setIsSOSOpen(true)}
+            onTrackAction={handleTrackAction}
+          />
+        </>
+      )}
+
+      {/* 06 - Footer */}
       <Footer
         onOpenSOS={() => setIsSOSOpen(true)}
+        onOpenMyTickets={() => setIsTicketsOpen(true)}
         onTrackAction={handleTrackAction}
       />
 
-      {/* 09 - Floating SOS Action Bar */}
+      {/* 07 - Floating SOS Bar */}
       <FloatingSOS
         onOpenSOS={() => setIsSOSOpen(true)}
+        onOpenMyTickets={() => setIsTicketsOpen(true)}
         onTrackAction={handleTrackAction}
       />
 
-      {/* 10 - Emergency Breakdown GPS Dispatch Modal */}
+      {/* 08 - Modals */}
       <EmergencyBreakdownModal
         isOpen={isSOSOpen}
         onClose={() => setIsSOSOpen(false)}
         onTrackAction={handleTrackAction}
+      />
+
+      <MyTicketsModal
+        isOpen={isTicketsOpen}
+        onClose={() => setIsTicketsOpen(false)}
+        onOpenSOSModal={() => {
+          setIsTicketsOpen(false);
+          setIsSOSOpen(true);
+        }}
       />
     </div>
   );

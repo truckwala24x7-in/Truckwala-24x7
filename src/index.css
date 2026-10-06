@@ -33,3 +33,74 @@
   background: #1e88e5;
 }
 
+/* ============================================================
+   LOGISTICS STRATEGY GAME ISOMETRIC ANIMATIONS & STYLING
+   ============================================================ */
+.iso-grid {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.glass {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+.glass-dark {
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.iso-building {
+  transform: rotateX(54deg) rotateZ(-45deg);
+  transform-style: preserve-3d;
+}
+.truck-a { animation: routeA 14s linear infinite; }
+.truck-b { animation: routeB 18s linear infinite; }
+.truck-c { animation: routeC 16s linear infinite; }
+.truck-d { animation: routeD 12s linear infinite; }
+.truck-e { animation: routeE 20s linear infinite; }
+.truck-f { animation: routeF 15s linear infinite; }
+
+@keyframes routeA {
+  0% { transform: translate(0, 0) rotate(-28deg); }
+  25% { transform: translate(180px, -92px) rotate(-28deg); }
+  50% { transform: translate(320px, 10px) rotate(32deg); }
+  75% { transform: translate(120px, 110px) rotate(152deg); }
+  100% { transform: translate(0, 0) rotate(-28deg); }
+}
+@keyframes routeB {
+  0% { transform: translate(0, 0) rotate(28deg); }
+  30% { transform: translate(-160px, 85px) rotate(152deg); }
+  60% { transform: translate(-300px, -20px) rotate(-28deg); }
+  100% { transform: translate(0, 0) rotate(28deg); }
+}
+@keyframes routeC {
+  0% { transform: translate(0, 0) rotate(-28deg); }
+  40% { transform: translate(220px, -115px) rotate(-28deg); }
+  70% { transform: translate(80px, -200px) rotate(152deg); }
+  100% { transform: translate(0, 0) rotate(-28deg); }
+}
+@keyframes routeD {
+  0% { transform: translate(0, 0) rotate(152deg); }
+  50% { transform: translate(-200px, 105px) rotate(152deg); }
+  100% { transform: translate(0, 0) rotate(152deg); }
+}
+@keyframes routeE {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes routeF {
+  0% { transform: translate(0, 0) rotate(32deg); }
+  35% { transform: translate(140px, 70px) rotate(32deg); }
+  65% { transform: translate(-80px, 140px) rotate(152deg); }
+  100% { transform: translate(0, 0) rotate(32deg); }
+}
+@keyframes pinPulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.45); opacity: 0; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+

@@ -30,12 +30,17 @@ export const VehicleCoverage: React.FC<VehicleCoverageProps> = ({ onTrackAction 
               className="bg-[#0e1420] border border-slate-800 rounded-sm p-6 flex flex-col justify-between hover:border-slate-700 transition-colors"
             >
               <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <ShieldCheck className="w-5 h-5 text-[#1E88E5]" />
+                <div className="flex items-center gap-2 mb-2">
+                  <ShieldCheck className="w-5 h-5 text-[#1E88E5] shrink-0" />
                   <h3 className="text-lg font-bold uppercase tracking-tight text-white">
                     {item.name}
                   </h3>
                 </div>
+                {item.hindiName && (
+                  <div className="text-xs font-semibold text-emerald-400 mb-3">
+                    {item.hindiName}
+                  </div>
+                )}
 
                 <div className="space-y-3 text-xs sm:text-sm">
                   <div>
@@ -47,7 +52,7 @@ export const VehicleCoverage: React.FC<VehicleCoverageProps> = ({ onTrackAction 
 
                   <div>
                     <span className="font-semibold text-slate-400 block text-[11px] uppercase tracking-wider mb-0.5">
-                      Engine Platforms:
+                      Engine Platforms & Diagnostics:
                     </span>
                     <span className="text-slate-300 font-mono text-xs">{item.engines}</span>
                   </div>
@@ -55,8 +60,8 @@ export const VehicleCoverage: React.FC<VehicleCoverageProps> = ({ onTrackAction 
               </div>
 
               <div className="pt-4 mt-4 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-center justify-between">
-                <span>BS-III / BS-IV / BS-VI</span>
-                <span className="text-emerald-400">Supported</span>
+                <span>BS-III / BS-IV / BS-VI OBD-II</span>
+                <span className="text-emerald-400 font-bold">24×7 Highway Support</span>
               </div>
             </div>
           ))}

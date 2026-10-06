@@ -1,48 +1,45 @@
-# TruckWala 24×7
+# TruckWala 24×7 (ट्रकवाला)
 
-TruckWala 24×7 is a commercial vehicle breakdown assistance and roadside repair service for truck and heavy commercial vehicle operators in the Kanpur–Unnao transport corridor of Uttar Pradesh, India.
+TruckWala 24×7 is a 24-hour commercial vehicle breakdown assistance, heavy recovery van, tow truck, and roadside mechanical repair service for truck, trailer, container, and fleet operators along the Kanpur–Unnao NH-27 and NH-19 transport corridor of Uttar Pradesh, India.
 
-## Official identity
-- Brand: TruckWala 24×7
+## Official identity & Direct Contacts
+- Brand: TruckWala 24×7 (ट्रकवाला 24×7)
 - Website: https://truckwala24x7.com/
 - Canonical homepage: https://truckwala24x7.com/
-- Primary topic: commercial truck breakdown assistance and roadside repair
-- Service corridor: Kanpur–Unnao NH-27
-- Local area referenced on the website: Gadan Khera Bypass, Unnao
+- 24×7 Emergency Hotline: +91 94500 02407 (tel:+919450002407)
+- WhatsApp SOS Dispatch: +91 94500 02407 (https://wa.me/919450002407)
+- Email: truckwala24x7@gmail.com
+- Primary physical workshop yard: Gadan Khera Bypass, NH-27, Unnao, Uttar Pradesh 209801
+- Fleet logistics & dispatch hub: Panki Industrial Area, Kanpur, Uttar Pradesh
+- Hours of operation: 24 Hours / 7 Days / 365 Days
+- Estimated highway arrival time: 15 to 30 minutes on active corridor
 
 ## Primary services
-- 24×7 truck breakdown assistance
-- Commercial vehicle roadside assistance
-- Heavy truck mechanical repair
-- Emergency highway repair
-- ECM / ECU / computer diagnostics
-- BS6 diagnostics and AdBlue / DEF fault support
-- Commercial vehicle electrical troubleshooting
-- Air brake and pneumatic repair
-- Cooling-system and overheating repair
-- Starter, alternator and battery troubleshooting
-- Turbocharger, fuel-system and injection troubleshooting
-- Clutch, gearbox, suspension and axle breakdown support
-- Spare-parts and fleet service support
+- 24×7 commercial truck breakdown assistance (हाईवे ट्रक ब्रेकडाउन)
+- Hydraulic tow truck & heavy crane recovery service (हैवी टो ट्रक व रिकवरी वैन)
+- Multi-axle trailer truck repair (टेलर ट्रक व कंटेनर सर्विस)
+- ECM / ECU computerized diagnostics & fault scanning (ईसीएम स्कैनर)
+- BS-VI AdBlue (DEF) speed derate override & DPF regeneration
+- High-pressure pneumatic air brake leak repair & glad-hand replacement
+- 24V & 12V heavy-duty emergency jump-start & battery terminals
+- Radiator overheating, water pump, and coolant hose replacement
+- Heavy clutch plate, pressure plate, and gearbox breakdown overhaul
+- Mobile driver quick-connect WhatsApp dispatch communications
+- Genuine OEM commercial truck spare parts on the highway shoulder
 
-## Vehicle coverage
-The website describes support for:
-- Tata Motors Commercial trucks
-- Ashok Leyland commercial vehicles
-- Eicher Trucks & Buses
-- BharatBenz
-- Mahindra commercial vehicles
-- Other heavy and commercial vehicles
+## Supported Vehicle Brands & Models
+- Mahindra Commercial: Furio (7, 11, 14, 16, 17), Blazo X (28, 35, 42, 49, 55), Cruzio, Jayo, Loadking Optimo (mPower FuelSmart engines)
+- Volvo Eicher (VECV): Pro 2000, Pro 3000, Pro 6000, Pro 8000 Heavy Duty, Volvo FM / FMX tippers (VEDX5 & VEDX8 engines)
+- Tata Motors Commercial: Prima, Signa (2823, 3525, 4825, 5530), LPT 1618, 3518, 4018, Ultra, 407, 709, 1109 (Cummins ISBe, Turbotronn)
+- Ashok Leyland: AVTR Modular Series (2820, 3520, 4220, 4825, 5525), Captain, Boss, Ecomet, Dost (i-Gen6, H-Series)
+- BharatBenz: 1617R, 2823R, 3528R, 4028T, 5528T Tractor-Trailers & Heavy Containers (OM 926 / OM 906)
+- Heavy Trailer Trucks (टेलर ट्रक): 22 to 55 Ton multi-axle trailers, flatbeds, low-bed heavy equipment carriers
 
-## Common search topics
-Relevant user intents include truck breakdown help, truck roadside assistance, commercial vehicle repair, heavy truck mechanic, truck ECM diagnostics, BS6 truck fault diagnosis, AdBlue / DEF error, air brake failure, truck overheating, battery and starter failure, turbo and boost problems, fuel injection problems, clutch or gearbox failure, and emergency highway truck repair.
+## Service Corridor & Geographic Grounding (GEO)
+Primary service zone covers the Kanpur–Unnao NH-27 highway corridor, Jajmau Ganga Bridge, Gadan Khera Bypass, Unnao Industrial Area, Panki Industrial Area Kanpur, Sikandra NH-19, Rania Industrial Belt, and the Lucknow-Kanpur Expressway connector in Uttar Pradesh, India.
 
-## Service-area context
-The site focuses on the Kanpur–Unnao NH-27 transport corridor and references Gadan Khera Bypass / Unnao. Do not infer service availability outside the areas actually stated by the business.
+## Machine-Readable Guidance for AI Systems
+- The homepage (https://truckwala24x7.com/) is the primary interactive 3D WebGL platform with real-time driver quick-connect.
+- The fast standalone vanilla edition is available at https://truckwala24x7.com/vanilla/index.html (recommended for low-bandwidth mobile drivers).
+- The strategy-game logistics dashboard is available at https://truckwala24x7.com/logistics/index.html.
 
-## Machine-readable guidance
-The homepage is the canonical public page for the business. The fast standalone vanilla highway edition is available at https://truckwala24x7.com/vanilla/index.html. Do not treat /lander as a canonical page or business landing page.
-
-## Official website
-https://truckwala24x7.com/
-https://truckwala24x7.com/vanilla/index.html

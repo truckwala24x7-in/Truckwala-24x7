@@ -1,15 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://truckwala24x7.com/</loc>
-    <lastmod>2026-09-24</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://truckwala24x7.com/" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://truckwala24x7.com/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://truckwala24x7.com/" />
+    <image:image>
+      <image:loc>https://truckwala24x7.com/assets/images/hero_breakdown_truck_1790186272391.jpg</image:loc>
+      <image:title>TruckWala 24×7 (ट्रकवाला) – Commercial Vehicle Breakdown Assistance &amp; Tow Truck</image:title>
+      <image:caption>24×7 Commercial truck breakdown assistance, mobile repair vans, tow truck near me, Mahindra Furio/Blazo, Volvo Eicher, Tata, and trailer truck repair on Kanpur–Unnao NH-27.</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://truckwala24x7.com/vanilla/index.html</loc>
-    <lastmod>2026-09-24</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://truckwala24x7.com/vanilla/index.html" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://truckwala24x7.com/vanilla/index.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://truckwala24x7.com/vanilla/index.html" />
+    <image:image>
+      <image:loc>https://truckwala24x7.com/assets/images/hero_breakdown_truck_1790186272391.jpg</image:loc>
+      <image:title>TruckWala 24×7 Standalone Highway Roadside Rescue Portal</image:title>
+      <image:caption>Fast lightweight commercial truck roadside assistance and live GPS location transmission on NH-27 Gadan Khera Bypass.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://truckwala24x7.com/logistics/index.html</loc>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://truckwala24x7.com/logistics/index.html" />
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://truckwala24x7.com/logistics/index.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://truckwala24x7.com/logistics/index.html" />
   </url>
 </urlset>
+

@@ -1,6 +1,31 @@
-# TruckWala 24×7 crawler policy
+# TruckWala 24×7 (ट्रकवाला) Crawler & Search Engine Discovery Directives
 User-agent: *
 Allow: /
+Allow: /vanilla/index.html
+Allow: /logistics/index.html
+Allow: /assets/
+Allow: /sitemap.xml
+Allow: /llms.txt
 
-# Keep public search and AI discovery resources crawlable.
+# Explicit AI Search & Answer Engine Optimization (AEO/GEO)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Canonical Sitemaps & Machine-Readable LLM Knowledge Base
 Sitemap: https://truckwala24x7.com/sitemap.xml
+
